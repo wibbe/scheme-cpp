@@ -16,8 +16,8 @@ compile:
 #debug:
 #	(gdb --args ./build/bin/demo -i examples/logo.png examples/Demo.js)
 
-#test:
-#	(cd build/bin && ./unit_test)
+test:
+	(cd build/bin && ./unit_test)
 
 clean:
 	make -C build clean

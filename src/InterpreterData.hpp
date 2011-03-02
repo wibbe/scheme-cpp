@@ -6,14 +6,17 @@
 
 namespace script
 {
-  struct InterpreterData
+  
+  class InterpreterData
   {
-    InterpreterData()
-      : eval(0)
-    { }
-    
-    scheme * eval;
+    public:
+      InterpreterData()
+        : eval(0)
+      { }
+          
+      scheme * eval;
   };
+  
 }
 
 #endif

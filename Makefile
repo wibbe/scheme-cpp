@@ -9,6 +9,7 @@ configure:
 
 compile:
 	make -C build
+	(cd build/bin && ./unit_test)
 
 #run:
 #	(./build/bin/demo -i examples/logo.png examples/Demo.js)

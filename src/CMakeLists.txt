@@ -1,10 +1,14 @@
 
 SET(SOURCE
    Interpreter.cpp
+   tinyscheme/scheme.c
 )
 
 SET(LIBRARIES
 )
+
+INCLUDE_DIRECTORIES("${CMAKE_CURRENT_SOURCE_DIR}/tinyscheme")
+ADD_DEFINITIONS(-DUSE_DL=0 -DSTANDALONE=0 -DUSE_MATH=1)
 
 ADD_LIBRARY(scheme-cpp ${SOURCE})
 TARGET_LINK_LIBRARIES(scheme-cpp ${LIBRARIES})

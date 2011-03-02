@@ -5,5 +5,5 @@
 
 TEST_CASE("Allocation", "Make sure we can allocate a scheme interpreter")
 {
-  scheme::Interpreter eval;
+  script::Interpreter eval;
 }

@@ -1,0 +1,10 @@
+
+SET(SOURCE
+)
+
+SET(LIBRARIES
+  scheme-cpp
+)
+
+#ADD_EXECUTABLE(unit_test ${SOURCE})
+#TARGET_LINK_LIBRARIES(unit_test ${LIBRARIES})

@@ -1,0 +1,7 @@
+h1. Scheme-Cpp
+
+A lightweight C++ wrapper around TinyScheme (http://tinyscheme.sourceforge.net/home.html).
+
+h2. License
+
+See the LICENSE file for legal information.

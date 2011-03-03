@@ -20,59 +20,32 @@
  * THE SOFTWARE.
  */
 
-#include "Interpreter.hpp"
-#include "InterpreterPrivate.hpp"
-
-#include <cassert>
-#include <iostream>
+#ifndef SCHEME_CPP_TYPES_HPP
+#define SCHEME_CPP_TYPES_HPP
 
 namespace script
 {
-   
-  Interpreter::Interpreter()
-    : m_private(new InterpreterPrivate())
-  {
-    m_private->eval = scheme_init_new();
-    m_private->bindOutputPort();
-  }
+  /**
+   * Servs as a null marker for types.
+   */
+  class NullType { };
   
-  Interpreter::Interpreter(Interpreter const& copy)
-    : m_private(new InterpreterPrivate())
+  /**
+   * Serves as a default ("don't care") type for templates.
+   */
+  class EmptyType { };
+  
+  /**
+   * Class that generates a distinct type for each distinct constant
+   * integral value passed.
+   */
+  template <int v>
+  struct Int2Type
   {
-    assert(0 && "Not allowed to create copies of an Interpreter");
-  }
+    enum { value = v };
+  };
 
-  Interpreter::~Interpreter()
-  {
-    scheme_deinit(m_private->eval);
-    m_private->eval = 0;
-  }
-  
-  bool Interpreter::isValid() const
-  {
-    return (m_private->eval != 0) && !m_private->hasError();
-  }
-  
-  bool Interpreter::hasError() const
-  {
-    return m_private->hasError();
-  }
-
-  std::string Interpreter::getLastErrorMessage() const
-  {
-    return m_private->getLastErrorMessage();
-  }
-  
-  void Interpreter::loadString(std::string const& code)
-  {
-    assert(m_private->eval);
-
-    m_private->bindOutputPort();
-    m_private->eval->vptr->load_string(m_private->eval, code.c_str());
-    
-    if (m_private->checkForErrors())
-      std::cerr << m_private->getLastErrorMessage() << std::endl;
-  }
-   
 }
+
+#endif
 

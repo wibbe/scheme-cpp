@@ -67,7 +67,7 @@ TEST_CASE("FunctionBinding", "Try binding some C functions to the interpreter")
   eval.function("callback1", scriptCallback1);
 
   // Try to call function
-  //eval.loadString("(callback1)");
-  //REQUIRE(callbackValue == 1);
+  eval.loadString("(callback1)");
+  REQUIRE(callbackValue == 1);
 }
 

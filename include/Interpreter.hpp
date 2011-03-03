@@ -63,7 +63,7 @@ namespace script
       std::string getStandardOut();
 
     private:
-      void registerFunction(std::string const& name, FunctionWrapper * wrapper);
+      void registerFunction(std::string const& name, BasicFunction * function);
       
     private:
       std::auto_ptr<InterpreterPrivate> m_private;

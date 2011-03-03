@@ -28,7 +28,7 @@
 #include "FunctionWrapper.hpp"
 
 #include <iostream>
-#include <list>
+#include <vector>
 
 namespace script
 {
@@ -81,7 +81,7 @@ namespace script
       
     public:   
       scheme * eval;
-      std::list<FunctionWrapper*> wrappers;
+      std::vector<BasicFunction *> functions;
       
     private:
       char m_outputData[OUTPUT_STRING_LENGTH];

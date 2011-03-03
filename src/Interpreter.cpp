@@ -25,15 +25,27 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 namespace script
 {
+  pointer scriptCallback(scheme * sc, pointer arguments)
+  {
+    int functionId = ivalue(pair_car(arguments));
+    fprintf(stderr, "Callback '%d' called\n", functionId);
+    
+    std::vector<BasicFunction *> * functions = static_cast<std::vector<BasicFunction *> *>(sc->ext_data);
+    return (*functions)[functionId]->call(sc, pair_cdr(arguments));
+  }
+
    
   Interpreter::Interpreter()
     : m_private(new InterpreterPrivate())
   {
     m_private->eval = scheme_init_new();
     m_private->bindOutputPort();
+
+    scheme_set_external_data(m_private->eval, static_cast<void *>(&m_private->functions));
   }
   
   Interpreter::Interpreter(Interpreter const& copy)
@@ -48,10 +60,10 @@ namespace script
     m_private->eval = 0;
 
     // Delete all the wrappers
-    for (std::list<FunctionWrapper*>::iterator it = m_private->wrappers.begin(), end = m_private->wrappers.end(); it != end; ++it)
+    for (std::vector<BasicFunction *>::iterator it = m_private->functions.begin(), end = m_private->functions.end(); it != end; ++it)
       delete *it;
 
-    m_private->wrappers.clear();
+    m_private->functions.clear();
   }
   
   bool Interpreter::isValid() const
@@ -74,26 +86,33 @@ namespace script
     return m_private->getStdOut();
   }
 
-  void Interpreter::registerFunction(std::string const& name, FunctionWrapper * wrapper)
+  void Interpreter::registerFunction(std::string const& name, BasicFunction * function)
   {
     assert(m_private->eval);
 
     // Store the wrapper so we can delete it later on.
-    m_private->wrappers.push_back(wrapper);
+    m_private->functions.push_back(function);
+
+    std::stringstream ss;
+    ss << "(define (" << name << " . args) (apply *" << name << "-internal* (cons " << m_private->functions.size() - 1 << " args)))";
+    loadString(ss.str());
+//    m_private->eval->vptr->load_string(m_private->eval, ss.str().c_str());
 
     // Bind the function to scheme
-    scheme_define(m_private->eval, m_private->eval->global_env, mk_symbol(m_private->eval, name.c_str()), mk_foreign_func(m_private->eval, (foreign_func)(wrapper)));
+    scheme_define(m_private->eval, m_private->eval->global_env, mk_symbol(m_private->eval, ("*" + name + "-internal*").c_str()), mk_foreign_func(m_private->eval, scriptCallback));
   }
   
   void Interpreter::loadString(std::string const& code)
   {
     assert(m_private->eval);
 
+    fprintf(stderr, "Running code: %s\n", code.c_str());
+
     m_private->bindOutputPort();
     m_private->eval->vptr->load_string(m_private->eval, code.c_str());
     
     if (m_private->checkForErrors())
-      std::cerr << m_private->getLastErrorMessage() << std::endl;
+      fprintf(stderr, "%s\n", m_private->getLastErrorMessage().c_str());
   }
    
 }

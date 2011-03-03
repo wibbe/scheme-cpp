@@ -32,7 +32,6 @@ namespace script
   pointer scriptCallback(scheme * sc, pointer arguments)
   {
     int functionId = ivalue(pair_car(arguments));
-    fprintf(stderr, "Callback '%d' called\n", functionId);
     
     std::vector<BasicFunction *> * functions = static_cast<std::vector<BasicFunction *> *>(sc->ext_data);
     return (*functions)[functionId]->call(sc, pair_cdr(arguments));
@@ -95,24 +94,22 @@ namespace script
 
     std::stringstream ss;
     ss << "(define (" << name << " . args) (apply *" << name << "-internal* (cons " << m_private->functions.size() - 1 << " args)))";
-    loadString(ss.str());
-//    m_private->eval->vptr->load_string(m_private->eval, ss.str().c_str());
+    m_private->eval->vptr->load_string(m_private->eval, ss.str().c_str());
 
     // Bind the function to scheme
-    scheme_define(m_private->eval, m_private->eval->global_env, mk_symbol(m_private->eval, ("*" + name + "-internal*").c_str()), mk_foreign_func(m_private->eval, scriptCallback));
+    scheme_define(m_private->eval, 
+                  m_private->eval->global_env, 
+                  mk_symbol(m_private->eval, ("*" + name + "-internal*").c_str()), 
+                  mk_foreign_func(m_private->eval, scriptCallback));
   }
   
   void Interpreter::loadString(std::string const& code)
   {
     assert(m_private->eval);
 
-    fprintf(stderr, "Running code: %s\n", code.c_str());
-
     m_private->bindOutputPort();
     m_private->eval->vptr->load_string(m_private->eval, code.c_str());
-    
-    if (m_private->checkForErrors())
-      fprintf(stderr, "%s\n", m_private->getLastErrorMessage().c_str());
+    m_private->checkForErrors();
   }
    
 }

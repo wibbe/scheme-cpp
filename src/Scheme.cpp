@@ -3,6 +3,9 @@
 #include "scheme.h"
 #include "scheme-private.h"
 
+#include <cstdarg>
+#include <stack>
+
 namespace script { namespace sc {
 
 
@@ -66,6 +69,43 @@ namespace script { namespace sc {
   pointer makeString(scheme * sc, std::string const& value)
   {
     return mk_string(sc, value.c_str());
+  }
+  
+  pointer makePair(scheme * sc, pointer a, pointer b)
+  {
+    return cons(sc, a, b);
+  }
+  
+  pointer makeList(scheme * sc, ...)
+  {
+    va_list args;
+    
+    std::stack<pointer> elements;
+    
+    // First we build the stack
+    va_start(args, sc);
+    
+    do
+    {
+      elements.push(va_arg(args, pointer));
+    }
+    while (elements.top() != 0);
+    
+    va_end(args);
+    
+    // Pop the first 0
+    elements.pop();
+
+    // Build the scheme list
+    pointer result = sc->NIL;
+  
+    for (;!elements.empty(); elements.pop())
+    {
+      pointer element = elements.top();
+      result = cons(sc, element, result);
+    }
+    
+    return result;
   }
 
   pointer getArg(pointer arguments, unsigned int index)

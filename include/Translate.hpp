@@ -212,6 +212,20 @@ namespace script
       return sc::makeString(sc, value);
     }
   };
+  
+  template <>
+  struct Translate<const char *>
+  {
+    static const char * fromScheme(scheme * sc, pointer value)
+    {
+      return sc::stringValue(value).c_str();
+    }
+
+    static pointer toScheme(scheme * sc, const char * value)
+    {
+      return sc::makeString(sc, value);
+    }
+  };
 
 }
 

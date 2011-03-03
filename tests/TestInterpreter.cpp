@@ -125,3 +125,62 @@ TEST_CASE("Cell/CallFunction", "Calling a function that returns a value")
   REQUIRE(result.toInteger() == 10);
 }
 
+TEST_CASE("Cell/CallFunctionWithArguments", "Calling a script function with arguments")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+  
+  // (+ 1)
+  script::Cell result = eval.call("+", 1);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 1);
+  
+  // (+ 1 2)
+  result = eval.call("+", 1, 2);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 3);
+  
+  // (+ 1 2 3)
+  result = eval.call("+", 1, 2, 3);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 6);
+  
+  // (+ 1 2 3 4)
+  result = eval.call("+", 1, 2, 3, 4);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 10);
+  
+  // (+ 1 2 3 4 5)
+  result = eval.call("+", 1, 2, 3, 4, 5);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 15);
+  
+  // (+ 1 2 3 4 5 6)
+  result = eval.call("+", 1, 2, 3, 4, 5, 6);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 21);
+}
+
+TEST_CASE("Call/CallWithStringArguments", "Calling a script function with string arguments")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+  
+  script::Cell result = eval.call("string-append", "Hello", " ", "World");
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isString() == true);
+  REQUIRE(result.toString() == "Hello World");  
+}

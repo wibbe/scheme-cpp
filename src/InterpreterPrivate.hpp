@@ -68,6 +68,12 @@ namespace script
 
         return m_error;
       }
+      
+      void setError(std::string const& message)
+      {
+        m_error = true;
+        m_lastErrorMessage = message;
+      }
 
       std::string getStdOut()
       {

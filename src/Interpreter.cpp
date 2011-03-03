@@ -24,6 +24,7 @@
 #include "InterpreterPrivate.hpp"
 
 #include <cassert>
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 
@@ -108,10 +109,15 @@ namespace script
     return Cell(m_private->eval, scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str())));
   }
 
-  Cell Interpreter::callWithArguments(std::string const& name, pointer args)
+  Cell Interpreter::callWithArguments(std::string const& name, pointer arguments)
   {
-    pointer func = scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str()));
-    return Cell(m_private->eval, scheme_call(m_private->eval, func, args));
+    pointer func = scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str()));    
+    return Cell(m_private->eval, scheme_call(m_private->eval, func, arguments));
+  }
+  
+  scheme * Interpreter::getScheme() const
+  {
+    return m_private->eval;
   }
   
   void Interpreter::loadString(std::string const& code)
@@ -119,12 +125,25 @@ namespace script
     assert(m_private->eval);
 
     m_private->bindOutputPort();
-    m_private->eval->vptr->load_string(m_private->eval, code.c_str());
+    scheme_load_string(m_private->eval, code.c_str());
     m_private->checkForErrors();
   }
 
-  void Interpreter::loadFile(std::string const& filename)
+  bool Interpreter::loadFile(std::string const& filename)
   {
+    FILE * file = fopen(filename.c_str(), "r");
+    
+    if (!file)
+    {
+      m_private->setError("Error: Could not locate file " + filename);
+      return false;
+    }
+    
+    m_private->bindOutputPort();
+    scheme_load_named_file(m_private->eval, file, filename.c_str());    
+    fclose(file);
+    
+    return m_private->checkForErrors();
   }
    
 }

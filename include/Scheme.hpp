@@ -23,6 +23,8 @@ namespace script { namespace sc {
   pointer makeInt(scheme * sc, long value);
   pointer makeReal(scheme * sc, double value);
   pointer makeString(scheme * sc, std::string const& value);
+  pointer makePair(scheme * sc, pointer a, pointer b);
+  pointer makeList(scheme * sc, ...);
 
   pointer getArg(pointer arguments, unsigned int index);
 

@@ -52,16 +52,32 @@ namespace script
       void loadString(std::string const& code);
       
       /// Load and execute a file.
-      void loadFile(std::string const& filename);
+      /// \return True if files was loaded successfully.
+      bool loadFile(std::string const& filename);
 
       /// Returns a globally defined script object/value.
       Cell getGlobalValue(std::string const& name);
 
-      /// Call a script function
+      /// Call a script function, and pass it arguments
       inline Cell call(std::string const& name);
 
       template <typename T1>
       inline Cell call(std::string const& name, T1 arg1);
+      
+      template <typename T1, typename T2>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2);
+      
+      template <typename T1, typename T2, typename T3>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3);
+      
+      template <typename T1, typename T2, typename T3, typename T4>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4);
+      
+      template <typename T1, typename T2, typename T3, typename T4, typename T5>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5);      
+      
+      template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6);
       
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;
@@ -78,6 +94,8 @@ namespace script
     private:
       void registerFunction(std::string const& name, BasicFunction * function);
       Cell callWithArguments(std::string const& name, pointer args);
+      
+      scheme * getScheme() const;
       
     private:
       std::auto_ptr<InterpreterPrivate> m_private;

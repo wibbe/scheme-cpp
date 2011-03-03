@@ -8,6 +8,7 @@ namespace script
   template <typename FuncT>
   Interpreter & Interpreter::function(std::string const& name, FuncT func)
   {
+    registerFunction(name, new FunctionWrapper(func));
     return *this;
   }
 

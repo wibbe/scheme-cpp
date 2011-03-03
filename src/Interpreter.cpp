@@ -46,6 +46,12 @@ namespace script
   {
     scheme_deinit(m_private->eval);
     m_private->eval = 0;
+
+    // Delete all the wrappers
+    for (std::list<FunctionWrapper*>::iterator it = m_private->wrappers.begin(), end = m_private->wrappers.end(); it != end; ++it)
+      delete *it;
+
+    m_private->wrappers.clear();
   }
   
   bool Interpreter::isValid() const
@@ -61,6 +67,22 @@ namespace script
   std::string Interpreter::getLastErrorMessage() const
   {
     return m_private->getLastErrorMessage();
+  }
+
+  std::string Interpreter::getStandardOut()
+  {
+    return m_private->getStdOut();
+  }
+
+  void Interpreter::registerFunction(std::string const& name, FunctionWrapper * wrapper)
+  {
+    assert(m_private->eval);
+
+    // Store the wrapper so we can delete it later on.
+    m_private->wrappers.push_back(wrapper);
+
+    // Bind the function to scheme
+    scheme_define(m_private->eval, m_private->eval->global_env, mk_symbol(m_private->eval, name.c_str()), mk_foreign_func(m_private->eval, (foreign_func)(wrapper)));
   }
   
   void Interpreter::loadString(std::string const& code)

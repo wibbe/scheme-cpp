@@ -25,8 +25,10 @@
 
 #include "scheme.h"
 #include "scheme-private.h"
+#include "FunctionWrapper.hpp"
 
 #include <iostream>
+#include <list>
 
 namespace script
 {
@@ -66,6 +68,12 @@ namespace script
 
         return m_error;
       }
+
+      std::string getStdOut()
+      {
+        std::string message(m_outputData);
+        return message;
+      }
       
       /// Returns true if an error has occurred.
       bool hasError() const { return m_error; }
@@ -73,6 +81,7 @@ namespace script
       
     public:   
       scheme * eval;
+      std::list<FunctionWrapper*> wrappers;
       
     private:
       char m_outputData[OUTPUT_STRING_LENGTH];

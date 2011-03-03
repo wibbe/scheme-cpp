@@ -1,6 +1,7 @@
 
 SET(SOURCE
    Interpreter.cpp
+   Scheme.cpp
    tinyscheme/scheme.c
 )
 

@@ -38,8 +38,6 @@ namespace script
   {
     typedef R Return;
     typedef NullType Params;
-    
-    static const bool Const = false;
   };
 
   template <typename R, typename P1>
@@ -47,8 +45,6 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_1(P1) Params;
-     
-    static const bool Const = false;   
   };
   
   template <typename R, typename P1, typename P2>
@@ -56,8 +52,6 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_2(P1, P2) Params;
-     
-    static const bool Const = false;   
   };
   
   template <typename R, typename P1, typename P2, typename P3>
@@ -65,8 +59,6 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_3(P1, P2, P3) Params;
-    
-    static const bool Const = false;   
   };
   
   template <typename R, typename P1, typename P2, typename P3, typename P4>
@@ -74,8 +66,6 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_4(P1, P2, P3, P4) Params;
-    
-    static const bool Const = false;   
   };
   
   template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5>
@@ -83,8 +73,6 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_5(P1, P2, P3, P4, P5) Params;
-    
-    static const bool Const = false;   
   };
   
   template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
@@ -92,76 +80,8 @@ namespace script
   {
     typedef R Return;
     typedef TYPELIST_6(P1, P2, P3, P4, P5, P6) Params;
-    
-    static const bool Const = false;   
   };
   
-  
-  // - Const definitions
-
-  template <typename R>
-  struct FunctionInfo<R (*)() const>
-  {
-    typedef R Return;
-    typedef NullType Params;
-   
-    static const bool Const = true;
-  };
-
-  template <typename R, typename P1>
-  struct FunctionInfo<R (*)(P1) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_1(P1) Params;
-    
-    static const bool Const = true;   
-  };
-  
-  template <typename R, typename P1, typename P2>
-  struct FunctionInfo<R (*)(P1, P2) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_2(P1, P2) Params;
-    
-    static const bool Const = true;
-  };
-  
-  template <typename R, typename P1, typename P2, typename P3>
-  struct FunctionInfo<R (*)(P1, P2, P3) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_3(P1, P2, P3) Params;
-    
-    static const bool Const = true;   
-  };
-  
-  template <typename R, typename P1, typename P2, typename P3, typename P4>
-  struct FunctionInfo<R (*)(P1, P2, P3, P4) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_4(P1, P2, P3, P4) Params;
-    
-    static const bool Const = true;   
-  };
-  
-  template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5>
-  struct FunctionInfo<R (*)(P1, P2, P3, P4, P5) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_5(P1, P2, P3, P4, P5) Params;
-    
-    static const bool Const = true;   
-  };
-  
-  template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-  struct FunctionInfo<R (*)(P1, P2, P3, P4, P5, P6) const>
-  {
-    typedef R Return;
-    typedef TYPELIST_6(P1, P2, P3, P4, P5, P6) Params;
-    
-    static const bool Const = true;
-  };
-
 }
 
 #endif

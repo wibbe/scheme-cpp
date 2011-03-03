@@ -26,6 +26,8 @@
 #include <memory>
 #include <string>
 
+#include "FunctionWrapper.hpp"
+
 namespace script
 {
   // Forward declarations
@@ -41,7 +43,7 @@ namespace script
       Interpreter();
       ~Interpreter();
 
-      /// Bind a C function to this interpreter
+      /// Bind a C function to this interpreter. After this, the function can be called from scheme using the supplied name.
       template <typename FuncT>
       Interpreter & function(std::string const& name, FuncT func);
       
@@ -50,9 +52,18 @@ namespace script
       
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;
+
+      /// Returns true if an error has occurred during script execution.
       bool hasError() const;
 
+      /// Returns the last error message that occurred.
       std::string getLastErrorMessage() const;
+
+      /// Returns the last output written to standard out.
+      std::string getStandardOut();
+
+    private:
+      void registerFunction(std::string const& name, FunctionWrapper * wrapper);
       
     private:
       std::auto_ptr<InterpreterPrivate> m_private;

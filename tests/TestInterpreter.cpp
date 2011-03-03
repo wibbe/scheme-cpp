@@ -24,6 +24,13 @@
 
 #include "Interpreter.hpp"
 
+static int callbackValue = 0;
+
+void scriptCallback1()
+{
+  callbackValue = 1;
+}
+
 TEST_CASE("Allocation", "Make sure we can allocate a scheme interpreter")
 {
   script::Interpreter eval;
@@ -40,5 +47,27 @@ TEST_CASE("RunCode/ErrorReporting", "Run some code that should produce an error"
   INFO("Make sure we got an error, and that it was the correct error");
   REQUIRE(eval.hasError() == true);
   CHECK(eval.getLastErrorMessage().find("unbound variable: my-own-print") != std::string::npos);
+}
+
+TEST_CASE("RunCode/StdOutTest", "Try printing something to std out")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+  
+  eval.loadString("(begin (display \"Hello World\") (newline))");
+  REQUIRE(eval.getStandardOut() == "Hello World\n");
+}
+
+TEST_CASE("FunctionBinding", "Try binding some C functions to the interpreter")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+
+  // Register function
+  eval.function("callback1", scriptCallback1);
+
+  // Try to call function
+  //eval.loadString("(callback1)");
+  //REQUIRE(callbackValue == 1);
 }
 

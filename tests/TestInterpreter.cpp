@@ -182,5 +182,24 @@ TEST_CASE("Call/CallWithStringArguments", "Calling a script function with string
   
   CHECK_FALSE(result.isNil());
   REQUIRE(result.isString() == true);
-  REQUIRE(result.toString() == "Hello World");  
+  REQUIRE(result.toString() == "Hello World");
+}
+
+TEST_CASE("RunCode/LoadFromFile", "Try to load code from file")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+  
+  eval.loadFile("../../src/tinyscheme/init.scm");
+  if (eval.hasError())
+    eval.loadFile("src/tinyscheme/init.scm");
+    
+  INFO(eval.getLastErrorMessage());
+  REQUIRE(eval.hasError() == false);
+  
+  script::Cell result = eval.call("gcd", 2, 4, 8, 10);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 2);
 }

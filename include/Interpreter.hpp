@@ -26,6 +26,7 @@
 #include <memory>
 #include <string>
 
+#include "Cell.hpp"
 #include "FunctionWrapper.hpp"
 
 namespace script
@@ -64,6 +65,8 @@ namespace script
 
       /// Returns the last output written to standard out.
       std::string getStandardOut();
+
+      Cell getGlobalValue(std::string const& name);
 
     private:
       void registerFunction(std::string const& name, BasicFunction * function);

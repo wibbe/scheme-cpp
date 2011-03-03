@@ -2,6 +2,7 @@
 SET(SOURCE
    Interpreter.cpp
    Scheme.cpp
+   Cell.cpp
    tinyscheme/scheme.c
 )
 

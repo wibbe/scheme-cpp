@@ -97,3 +97,17 @@ TEST_CASE("FunctionBinding/CallingAndReturnValue", "Try binding a C function, ca
   REQUIRE(eval.getStandardOut() == "3");
 }
 
+TEST_CASE("Cell/GlobalValue", "Getting a global value")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+
+  eval.loadString("(define a 25)");
+
+  script::Cell value = eval.getGlobalValue("a");
+
+  CHECK_FALSE(value.isNil());
+  REQUIRE(value.isInteger() == true);
+  REQUIRE(value.toInteger() == 25);
+}
+

@@ -102,6 +102,11 @@ namespace script
                   mk_symbol(m_private->eval, ("*" + name + "-internal*").c_str()), 
                   mk_foreign_func(m_private->eval, scriptCallback));
   }
+
+  Cell Interpreter::getGlobalValue(std::string const& name)
+  {
+    return Cell(m_private->eval, scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str())));
+  }
   
   void Interpreter::loadString(std::string const& code)
   {

@@ -92,7 +92,7 @@ namespace script
 
   bool Cell::toBoolean() const
   {
-    return m_value == m_scheme->T;
+    return m_value != m_scheme->F;
   }
 
   std::string Cell::toString() const

@@ -39,7 +39,7 @@ namespace script { namespace sc {
 
   bool boolValue(scheme * sc, pointer value)
   {
-    return sc->T == value;
+    return value != sc->F;
   }
 
   char charValue(pointer value)

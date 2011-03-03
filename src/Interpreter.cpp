@@ -43,6 +43,10 @@ namespace script
     : m_private(new InterpreterPrivate())
   {
     m_private->eval = scheme_init_new();
+    
+    scheme_set_input_port_file(m_private->eval, stdin);
+    scheme_set_output_port_file(m_private->eval, stdout);
+    
     m_private->bindOutputPort();
 
     scheme_set_external_data(m_private->eval, static_cast<void *>(&m_private->functions));

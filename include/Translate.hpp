@@ -27,7 +27,7 @@
 
 namespace script 
 {
-
+  
   template <typename T>
   struct Translate;
 

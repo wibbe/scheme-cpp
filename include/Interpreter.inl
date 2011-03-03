@@ -12,6 +12,16 @@ namespace script
     return *this;
   }
 
+  Cell Interpreter::call(std::string const& name)
+  {
+    return callWithArguments(name, 0);
+  }
+
+  template <typename T1>
+  inline Cell Interpreter::call(std::string const& name, T1 arg1)
+  {
+  }
+
 }
 
 #endif

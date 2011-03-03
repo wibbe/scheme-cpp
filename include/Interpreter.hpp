@@ -58,7 +58,10 @@ namespace script
       Cell getGlobalValue(std::string const& name);
 
       /// Call a script function
-      Cell call(std::string const& name);
+      inline Cell call(std::string const& name);
+
+      template <typename T1>
+      inline Cell call(std::string const& name, T1 arg1);
       
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;
@@ -74,6 +77,7 @@ namespace script
 
     private:
       void registerFunction(std::string const& name, BasicFunction * function);
+      Cell callWithArguments(std::string const& name, pointer args);
       
     private:
       std::auto_ptr<InterpreterPrivate> m_private;

@@ -2,7 +2,6 @@
 SET(SOURCE
    Main.cpp
    TestInterpreter.cpp
-   TestCallbacks.cpp
 )
 
 SET(LIBRARIES

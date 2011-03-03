@@ -111,3 +111,17 @@ TEST_CASE("Cell/GlobalValue", "Getting a global value")
   REQUIRE(value.toInteger() == 25);
 }
 
+TEST_CASE("Cell/CallFunction", "Calling a function that returns a value")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+
+  eval.loadString("(define (my-func) 10)");
+
+  script::Cell result = eval.call("my-func");
+
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 10);
+}
+

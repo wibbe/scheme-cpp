@@ -53,6 +53,12 @@ namespace script
       
       /// Load and execute a file.
       void loadFile(std::string const& filename);
+
+      /// Returns a globally defined script object/value.
+      Cell getGlobalValue(std::string const& name);
+
+      /// Call a script function
+      Cell call(std::string const& name);
       
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;
@@ -65,8 +71,6 @@ namespace script
 
       /// Returns the last output written to standard out.
       std::string getStandardOut();
-
-      Cell getGlobalValue(std::string const& name);
 
     private:
       void registerFunction(std::string const& name, BasicFunction * function);

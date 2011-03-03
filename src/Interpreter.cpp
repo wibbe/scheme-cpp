@@ -107,6 +107,12 @@ namespace script
   {
     return Cell(m_private->eval, scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str())));
   }
+
+  Cell Interpreter::call(std::string const& name)
+  {
+    pointer func = scheme_eval(m_private->eval, mk_symbol(m_private->eval, name.c_str()));
+    return Cell(m_private->eval, scheme_call(m_private->eval, func, m_private->eval->NIL));
+  }
   
   void Interpreter::loadString(std::string const& code)
   {

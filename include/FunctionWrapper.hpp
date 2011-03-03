@@ -34,13 +34,6 @@ namespace script
   {
     public:
       virtual pointer call(scheme * sc, pointer arguments) = 0;
-
-    protected:
-      template <typename T>
-      inline T argAt(scheme * sc, pointer arguments, unsigned int pos)
-      {
-        return Translate<T>::fromScheme(sc, sc::getArgument(arguments, pos)); 
-      }
   };
 
 
@@ -98,7 +91,7 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        return Translate<ReturnT>::toScheme(sc, m_function(argAt<P1>(sc, args, 0)));
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0))));
       }
 
     private:
@@ -115,7 +108,7 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        m_function(argAt<P1>(sc, args, 0));
+        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)));
         return sc::makeNil(sc);
       }
 
@@ -135,7 +128,8 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        return Translate<ReturnT>::toScheme(sc, m_function(argAt<P1>(sc, args, 0), argAt<P2>(sc, args, 1)));
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1))));
       }
 
     private:
@@ -152,7 +146,8 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        m_function(argAt<P1>(sc, args, 0), argAt<P2>(sc, args, 1));
+        m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::fromScheme(sc, sc::getArg(args, 1)));
         return sc::makeNil(sc);
       }
 
@@ -172,7 +167,9 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        return Translate<ReturnT>::toScheme(sc, m_function(argAt<P1>(sc, args, 0), argAt<P2>(sc, args, 1), argAt<P3>(sc, args, 2)));
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1)), 
+                                                           Translate<P3>::fromScheme(sc, sc::getArg(args, 2))));
       }
 
     private:
@@ -189,7 +186,52 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        m_function(argAt<P1>(sc, args, 0), argAt<P2>(sc, args, 1), argAt<P3>(sc, args, 2));
+        m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::fromScheme(sc, sc::getArg(args, 1)),
+                   Translate<P3>::fromScheme(sc, sc::getArg(args, 2)));
+        return sc::makeNil(sc);
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  // -- Function with 4 arguments
+
+  template <typename FuncT, typename ReturnT, typename P1, typename P2, typename P3, typename P4>
+  class Function<4, FuncT, ReturnT, TYPELIST_4(P1, P2, P3, P4)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1)), 
+                                                           Translate<P3>::fromScheme(sc, sc::getArg(args, 2)), 
+                                                           Translate<P4>::fromScheme(sc, sc::getArg(args, 3))));
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  template <typename FuncT, typename P1, typename P2, typename P3, typename P4>
+  class Function<4, FuncT, void, TYPELIST_4(P1, P2, P3, P4)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::toScheme(sc, sc::getArg(args, 1)), 
+                   Translate<P3>::toScheme(sc, sc::getArg(args, 2)), 
+                   Translate<P4>::toScheme(sc, sc::getArg(args, 3)));
         return sc::makeNil(sc);
       }
 

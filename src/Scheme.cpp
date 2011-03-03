@@ -33,6 +33,11 @@ namespace script { namespace sc {
     return rvalue(value);
   }
 
+  std::string stringValue(pointer value)
+  {
+    return std::string(string_value(value));
+  }
+
   pointer makeNil(scheme * sc)
   {
     return sc->NIL;
@@ -58,7 +63,12 @@ namespace script { namespace sc {
     return mk_real(sc, value);
   }
 
-  pointer getArgument(pointer arguments, unsigned int index)
+  pointer makeString(scheme * sc, std::string const& value)
+  {
+    return mk_string(sc, value.c_str());
+  }
+
+  pointer getArg(pointer arguments, unsigned int index)
   {
     while (index != 0)
     {

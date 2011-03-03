@@ -185,6 +185,34 @@ namespace script
     }
   };
 
+  template <>
+  struct Translate<std::string>
+  {
+    static std::string fromScheme(scheme * sc, pointer value)
+    {
+      return sc::stringValue(value);
+    }
+
+    static pointer toScheme(scheme * sc, std::string const& value)
+    {
+      return sc::makeString(sc, value);
+    }
+  };
+
+  template <>
+  struct Translate<std::string const&>
+  {
+    static std::string fromScheme(scheme * sc, pointer value)
+    {
+      return sc::stringValue(value);
+    }
+
+    static pointer toScheme(scheme * sc, std::string const& value)
+    {
+      return sc::makeString(sc, value);
+    }
+  };
+
 }
 
 #endif

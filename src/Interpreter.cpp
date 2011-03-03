@@ -111,6 +111,10 @@ namespace script
     m_private->eval->vptr->load_string(m_private->eval, code.c_str());
     m_private->checkForErrors();
   }
+
+  void Interpreter::loadFile(std::string const& filename)
+  {
+  }
    
 }
 

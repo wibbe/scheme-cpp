@@ -26,9 +26,18 @@
 
 static int callbackValue = 0;
 
-void scriptCallback1()
+void scriptCallback()
 {
   callbackValue = 1;
+}
+
+int scriptAdd(int a, int b)
+{
+  return a + b;
+}
+
+std::string scriptString(std::string const& a)
+{
 }
 
 TEST_CASE("Allocation", "Make sure we can allocate a scheme interpreter")
@@ -58,16 +67,33 @@ TEST_CASE("RunCode/StdOutTest", "Try printing something to std out")
   REQUIRE(eval.getStandardOut() == "Hello World\n");
 }
 
-TEST_CASE("FunctionBinding", "Try binding some C functions to the interpreter")
+TEST_CASE("FunctionBinding/Binding", "Try binding a C function to the interpreter")
 {
   script::Interpreter eval;
   CHECK(eval.isValid());
 
   // Register function
-  eval.function("callback1", scriptCallback1);
+  eval.function("callback", scriptCallback);
+}
 
-  // Try to call function
-  eval.loadString("(callback1)");
-  REQUIRE(callbackValue == 1);
+TEST_CASE("FunctionBinding/BindingStringFunction", "Try binding a C function that takes strings as arguments.")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+
+  // Register function
+  eval.function("callback", scriptString);
+}
+
+TEST_CASE("FunctionBinding/CallingAndReturnValue", "Try binding a C function, calling it and getting the return value.")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+
+  // Register function
+  eval.function("add", scriptAdd);
+  eval.loadString("(display (add 1 2))");
+
+  REQUIRE(eval.getStandardOut() == "3");
 }
 

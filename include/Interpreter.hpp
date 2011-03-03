@@ -50,6 +50,9 @@ namespace script
       /// Load and execute a string containing code.
       void loadString(std::string const& code);
       
+      /// Load and execute a file.
+      void loadFile(std::string const& filename);
+      
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;
 

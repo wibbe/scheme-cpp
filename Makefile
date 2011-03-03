@@ -3,6 +3,12 @@ all: compile
 
 configure:
 	mkdir -p build
+	(cd build && cmake -DCMAKE_BUILD_TYPE=Release ..)
+	git submodule init
+	git submodule update
+
+configure-debug:
+	mkdir -p build
 	(cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..)
 	git submodule init
 	git submodule update

@@ -52,6 +52,9 @@ namespace script
       bool toBoolean() const;
       std::string toString() const;
 
+      Cell car() const;
+      Cell cdr() const;
+
     private:
       scheme * m_scheme;
       pointer m_value;
@@ -62,4 +65,5 @@ namespace script
 }
 
 #endif
+
 

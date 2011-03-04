@@ -103,5 +103,20 @@ namespace script
     return string_value(m_value);
   }
 
+  Cell Cell::car() const
+  {
+    if (!isPair())
+      return Cell();
+    return Cell(m_scheme, pair_car(m_value));
+  }
+
+  Cell Cell::cdr() const
+  {
+    if (!isPair())
+      return Cell();
+    return Cell(m_scheme, pair_cdr(m_value));
+  }
+
 }
+
 

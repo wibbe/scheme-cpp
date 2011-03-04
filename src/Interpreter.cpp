@@ -53,7 +53,7 @@ namespace script
   }
   
   Interpreter::Interpreter(Interpreter const& copy)
-    : m_private(new InterpreterPrivate())
+    : m_private(0)
   {
     assert(0 && "Not allowed to create copies of an Interpreter");
   }

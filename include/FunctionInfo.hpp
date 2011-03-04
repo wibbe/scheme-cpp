@@ -81,6 +81,20 @@ namespace script
     typedef R Return;
     typedef TYPELIST_6(P1, P2, P3, P4, P5, P6) Params;
   };
+
+  template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+  struct FunctionInfo<R (*)(P1, P2, P3, P4, P5, P6, P7)>
+  {
+    typedef R Return;
+    typedef TYPELIST_7(P1, P2, P3, P4, P5, P6, P7) Params;
+  };
+
+  template <typename R, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+  struct FunctionInfo<R (*)(P1, P2, P3, P4, P5, P6, P7, P8)>
+  {
+    typedef R Return;
+    typedef TYPELIST_8(P1, P2, P3, P4, P5, P6, P7, P8) Params;
+  };
   
 }
 

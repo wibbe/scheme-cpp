@@ -283,6 +283,153 @@ namespace script
     private:
       FuncT m_function;
   };
+
+  // -- Function with 6 arguments
+
+  template <typename FuncT, typename ReturnT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+  class Function<6, FuncT, ReturnT, TYPELIST_6(P1, P2, P3, P4, P5, P6)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1)), 
+                                                           Translate<P3>::fromScheme(sc, sc::getArg(args, 2)), 
+                                                           Translate<P4>::fromScheme(sc, sc::getArg(args, 3)),
+                                                           Translate<P5>::fromScheme(sc, sc::getArg(args, 4)),
+                                                           Translate<P6>::fromScheme(sc, sc::getArg(args, 5))));
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  template <typename FuncT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+  class Function<6, FuncT, void, TYPELIST_6(P1, P2, P3, P4, P5, P6)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::toScheme(sc, sc::getArg(args, 1)), 
+                   Translate<P3>::toScheme(sc, sc::getArg(args, 2)), 
+                   Translate<P4>::toScheme(sc, sc::getArg(args, 3)),
+                   Translate<P5>::toScheme(sc, sc::getArg(args, 4)),
+                   Translate<P6>::toScheme(sc, sc::getArg(args, 5)));
+        return sc::makeNil(sc);
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  // -- Function with 7 arguments
+
+  template <typename FuncT, typename ReturnT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+  class Function<7, FuncT, ReturnT, TYPELIST_7(P1, P2, P3, P4, P5, P6, P7)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1)), 
+                                                           Translate<P3>::fromScheme(sc, sc::getArg(args, 2)), 
+                                                           Translate<P4>::fromScheme(sc, sc::getArg(args, 3)),
+                                                           Translate<P5>::fromScheme(sc, sc::getArg(args, 4)),
+                                                           Translate<P6>::fromScheme(sc, sc::getArg(args, 5)),
+                                                           Translate<P7>::fromScheme(sc, sc::getArg(args, 6))));
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  template <typename FuncT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+  class Function<7, FuncT, void, TYPELIST_7(P1, P2, P3, P4, P5, P6, P7)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::toScheme(sc, sc::getArg(args, 1)), 
+                   Translate<P3>::toScheme(sc, sc::getArg(args, 2)), 
+                   Translate<P4>::toScheme(sc, sc::getArg(args, 3)),
+                   Translate<P5>::toScheme(sc, sc::getArg(args, 4)),
+                   Translate<P6>::toScheme(sc, sc::getArg(args, 5)),
+                   Translate<P7>::toScheme(sc, sc::getArg(args, 6)));
+        return sc::makeNil(sc);
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  // -- Function with 8 arguments
+
+  template <typename FuncT, typename ReturnT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+  class Function<8, FuncT, ReturnT, TYPELIST_8(P1, P2, P3, P4, P5, P6, P7, P8)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        return Translate<ReturnT>::toScheme(sc, m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)), 
+                                                           Translate<P2>::fromScheme(sc, sc::getArg(args, 1)), 
+                                                           Translate<P3>::fromScheme(sc, sc::getArg(args, 2)), 
+                                                           Translate<P4>::fromScheme(sc, sc::getArg(args, 3)),
+                                                           Translate<P5>::fromScheme(sc, sc::getArg(args, 4)),
+                                                           Translate<P6>::fromScheme(sc, sc::getArg(args, 5)),
+                                                           Translate<P7>::fromScheme(sc, sc::getArg(args, 6)),
+                                                           Translate<P8>::fromScheme(sc, sc::getArg(args, 7))));
+      }
+
+    private:
+      FuncT m_function;
+  };
+
+  template <typename FuncT, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+  class Function<8, FuncT, void, TYPELIST_8(P1, P2, P3, P4, P5, P6, P7, P8)> : public BasicFunction
+  {
+    public:
+      Function(FuncT function)
+        : m_function(function)
+      { }
+
+      pointer call(scheme * sc, pointer args)
+      {
+        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)), 
+                   Translate<P2>::toScheme(sc, sc::getArg(args, 1)), 
+                   Translate<P3>::toScheme(sc, sc::getArg(args, 2)), 
+                   Translate<P4>::toScheme(sc, sc::getArg(args, 3)),
+                   Translate<P5>::toScheme(sc, sc::getArg(args, 4)),
+                   Translate<P6>::toScheme(sc, sc::getArg(args, 5)),
+                   Translate<P7>::toScheme(sc, sc::getArg(args, 6)),
+                   Translate<P8>::toScheme(sc, sc::getArg(args, 7)));
+        return sc::makeNil(sc);
+      }
+
+    private:
+      FuncT m_function;
+  };
 }
 
 #endif

@@ -78,6 +78,12 @@ namespace script
       
       template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
       inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6);
+
+      template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7);
+
+      template <typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
+      inline Cell call(std::string const& name, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8);
       
       /// Returns true if we have a valid context to execute scheme code in.
       bool isValid() const;

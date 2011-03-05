@@ -21,16 +21,16 @@ h2. Example
 A simple example on how to use the library.
 
 Start by creating an instance of the Interpreter.
-@script::Interpreter eval;@
+bc. script::Interpreter eval;
 
 Next we can execute some code, here we define a function called add.
-@eval.loadScript("(define (add a b) (+ a b))");@
+bc. eval.loadScript("(define (add a b) (+ a b))");
 
 Then we can call our new function, and get back the result.
-@script::Cell result = eval.call("add", 1, 2);@
+bc. script::Cell result = eval.call("add", 1, 2);
 
 And lastly we can access the result.
-@int value = result.toInteger();@
+bc. int value = result.toInteger();
 
 h3. Binding C functions
 
@@ -45,11 +45,11 @@ bc. void printFunc(std::string const& str)
 
 Then we create an interpreter and bind our function to it.
 
-bc . script::Interpreter eval;
+bc. script::Interpreter eval;
 eval.function("print", printFunc);
 
 We can then call our C function from scheme.
-@eval.loadString("(print \"Hello World!\")");@
+bc. eval.loadString("(print \"Hello World!\")");
 
 h2. License
 

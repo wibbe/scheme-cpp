@@ -72,7 +72,7 @@ namespace script
 
   bool Cell::isNil() const
   {
-    return m_value == m_scheme->NIL;
+    return m_value == m_scheme->NIL || m_value == 0;
   }
   
   bool Cell::isPair() const

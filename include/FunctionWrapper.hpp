@@ -108,7 +108,7 @@ namespace script
 
       pointer call(scheme * sc, pointer args)
       {
-        m_function(Translate<P1>::toScheme(sc, sc::getArg(args, 0)));
+        m_function(Translate<P1>::fromScheme(sc, sc::getArg(args, 0)));
         return sc::makeNil(sc);
       }
 

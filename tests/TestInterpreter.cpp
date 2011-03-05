@@ -36,7 +36,7 @@ int scriptAdd(int a, int b)
   return a + b;
 }
 
-std::string scriptString(std::string const& a)
+void scriptString(std::string const& a)
 {
 }
 
@@ -83,6 +83,8 @@ TEST_CASE("FunctionBinding/BindingStringFunction", "Try binding a C function tha
 
   // Register function
   eval.function("callback", scriptString);
+  eval.loadString("(callback \"Hello World\")");
+  CHECK_FALSE(eval.hasError());
 }
 
 TEST_CASE("FunctionBinding/CallingAndReturnValue", "Try binding a C function, calling it and getting the return value.")

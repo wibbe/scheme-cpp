@@ -32,6 +32,28 @@ Then we can call our new function, and get back the result.
 And lastly we can access the result.
 @int value = result.toInteger();@
 
+h3. Binding C functions
+
+It is really easy to bind C functions to the interpreter, so they can be accessed from scheme.
+
+First we define out function, lets make a print function.
+@
+void printFunc(std::string const& str)
+{
+  std::cout << str << std::endl;
+}
+@
+
+Then we create an interpreter and bind our function to it.
+
+@
+script::Interpreter eval;
+eval.function("print", printFunc);
+@
+
+We can then call our C function from scheme.
+@eval.loadString("(print \"Hello World!\")");@
+
 h2. License
 
 See the LICENSE file for legal information about Scheme-Cpp. For license information about

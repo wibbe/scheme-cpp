@@ -25,6 +25,7 @@
 
 #include <string>
 
+// Forward declarations
 typedef struct scheme scheme;
 typedef struct cell * pointer;
 

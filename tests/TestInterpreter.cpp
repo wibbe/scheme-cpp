@@ -103,12 +103,46 @@ TEST_CASE("Cell/GlobalValue", "Getting a global value")
   CHECK(eval.isValid());
 
   eval.loadString("(define a 25)");
+  eval.loadString("(define b 2.5)");
 
+  script::Cell a = eval.getGlobalValue("a");
+  script::Cell b = eval.getGlobalValue("b");
+
+  CHECK_FALSE(a.isNil());
+  CHECK(a.isInteger());
+  CHECK(a.toInteger() == 25);
+  
+  CHECK_FALSE(b.isNil());
+  CHECK(b.isReal());
+  CHECK(b.toReal() == 2.5);
+}
+
+TEST_CASE("Cell/PairFunctions", "Test the pair car/cdr function on the Cell class.")
+{
+  script::Interpreter eval;
+  CHECK(eval.isValid());
+  
+  eval.loadString("(define a '(1 2 3))");
+  CHECK_FALSE(eval.hasError());
+  
   script::Cell value = eval.getGlobalValue("a");
-
+  
   CHECK_FALSE(value.isNil());
-  REQUIRE(value.isInteger() == true);
-  REQUIRE(value.toInteger() == 25);
+  CHECK(value.isPair());
+  
+  script::Cell car = value.car();
+  script::Cell cdr = value.cdr();
+  
+  CHECK_FALSE(car.isNil());
+  CHECK_FALSE(cdr.isNil());
+  CHECK(car.isInteger());
+  CHECK(cdr.isPair());
+  
+  CHECK(car.toInteger() == 1);
+  CHECK(cdr.car().toInteger() == 2);
+  CHECK(cdr.cdr().car().isInteger());
+  CHECK(cdr.cdr().car().toInteger() == 3);
+  CHECK(cdr.cdr().cdr().isNil());
 }
 
 TEST_CASE("Cell/CallFunction", "Calling a function that returns a value")
@@ -125,7 +159,7 @@ TEST_CASE("Cell/CallFunction", "Calling a function that returns a value")
   REQUIRE(result.toInteger() == 10);
 }
 
-TEST_CASE("Cell/CallFunctionWithArguments", "Calling a script function with arguments")
+TEST_CASE("Cell/CallFunctionWithArguments", "Calling a script function with multiple arguments")
 {
   script::Interpreter eval;
   CHECK(eval.isValid());
@@ -171,6 +205,20 @@ TEST_CASE("Cell/CallFunctionWithArguments", "Calling a script function with argu
   CHECK_FALSE(result.isNil());
   REQUIRE(result.isInteger() == true);
   REQUIRE(result.toInteger() == 21);
+  
+  // (+ 1 2 3 4 5 6 7)
+  result = eval.call("+", 1, 2, 3, 4, 5, 6, 7);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 28);
+  
+  // (+ 1 2 3 4 5 6 7 8)
+  result = eval.call("+", 1, 2, 3, 4, 5, 6, 7, 8);
+  
+  CHECK_FALSE(result.isNil());
+  REQUIRE(result.isInteger() == true);
+  REQUIRE(result.toInteger() == 36);
 }
 
 TEST_CASE("Call/CallWithStringArguments", "Calling a script function with string arguments")

@@ -1,7 +1,38 @@
 h1. Scheme-Cpp
 
-A lightweight C++ wrapper around TinyScheme (http://tinyscheme.sourceforge.net/home.html).
+A lightweight C++ wrapper around TinyScheme (http://tinyscheme.sourceforge.net/home.html)
+
+h2. Building
+
+OS X and Linux is the only supported platforms for the moment, and you will need CMake to generate the requires Makefile.
+
+Create a build folder, this step is optional, but it's encouraged. It makes cleaning up a lot easier, especially because CMake creates a lot of files all over the place:
+@mkdir build@
+@cd build@
+
+Generate makefiles for the project:
+@cmake -DCMAKE_BUILD_TYPE=Debug ..@
+
+Compile:
+@make@
+
+h2. Example
+
+A simple example on how to use the library.
+
+Start by creating an instance of the Interpreter.
+@script::Interpreter eval;@
+
+Next we can execute some code, here we define a function called add.
+@eval.loadScript("(define (add a b) (+ a b));")@
+
+Then we can call our new function, and get back the result.
+@script::Cell result = eval.call("add", 1, 2);@
+
+And lastly we can access the result.
+@int value = result.toInteger();@
 
 h2. License
 
-See the LICENSE file for legal information.
+See the LICENSE file for legal information about Scheme-Cpp. For license information about
+TinyScheme see the file @src/tinyscheme/COPYING@.

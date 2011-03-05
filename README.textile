@@ -21,15 +21,19 @@ h2. Example
 A simple example on how to use the library.
 
 Start by creating an instance of the Interpreter.
+
 bc. script::Interpreter eval;
 
 Next we can execute some code, here we define a function called add.
+
 bc. eval.loadScript("(define (add a b) (+ a b))");
 
 Then we can call our new function, and get back the result.
+
 bc. script::Cell result = eval.call("add", 1, 2);
 
 And lastly we can access the result.
+
 bc. int value = result.toInteger();
 
 h3. Binding C functions
@@ -49,6 +53,7 @@ bc. script::Interpreter eval;
 eval.function("print", printFunc);
 
 We can then call our C function from scheme.
+
 bc. eval.loadString("(print \"Hello World!\")");
 
 h2. License

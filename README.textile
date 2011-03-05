@@ -37,19 +37,16 @@ h3. Binding C functions
 It is really easy to bind C functions to the interpreter, so they can be accessed from scheme.
 
 First we define out function, lets make a print function.
-@
-void printFunc(std::string const& str)
+
+bc. void printFunc(std::string const& str)
 {
   std::cout << str << std::endl;
 }
-@
 
 Then we create an interpreter and bind our function to it.
 
-@
-script::Interpreter eval;
+bc . script::Interpreter eval;
 eval.function("print", printFunc);
-@
 
 We can then call our C function from scheme.
 @eval.loadString("(print \"Hello World!\")");@

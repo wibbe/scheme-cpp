@@ -4,7 +4,7 @@ A lightweight C++ wrapper around TinyScheme (http://tinyscheme.sourceforge.net/h
 
 h2. Building
 
-OS X and Linux is the only supported platforms for the moment, and you will need CMake to generate the requires Makefile.
+OS X and Linux is the only supported platforms for the moment, and you will need CMake to generate the required Makefile.
 
 Create a build folder, this step is optional, but it's encouraged. It makes cleaning up a lot easier, especially because CMake creates a lot of files all over the place:
 @mkdir build@
